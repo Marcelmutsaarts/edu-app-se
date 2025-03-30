@@ -1180,29 +1180,416 @@ def git_github_basis_pagina():
         st.markdown("**Repository (Repo):** (Herhaling) Een map die alle projectbestanden bevat, inclusief de volledige geschiedenis van wijzigingen, vaak gehost op een platform zoals GitHub.")
         st.markdown("**Branch:** (Herhaling) Een onafhankelijke lijn van ontwikkeling binnen een Git repository. `main` of `master` is meestal de hoofdlijn; je deployt vaak vanaf deze branch.")
 
-# --- Placeholder voor Data Opslag ---
-# Hier kunnen we later functies toevoegen om bijvoorbeeld gebruikersvoortgang
-# op te slaan en te laden. Streamlit heeft 'Session State' voor tijdelijke opslag
-# binnen een sessie. Voor permanente opslag zouden we bestanden of een database gebruiken.
-# Voorbeeld (nog niet functioneel):
-# def laad_voortgang():
-#     if 'user_progress' not in st.session_state:
-#         st.session_state.user_progress = {} # Initialiseer als leeg dictionary
-#     # Hier zou code komen om data uit een bestand/db te laden
-#     pass
-#
-# def sla_voortgang_op():
-#     # Hier zou code komen om st.session_state.user_progress op te slaan
-#     pass
+# --- NIEUWE FUNCTIE VOOR BASIS VAN HTML ---
+def html_basis_pagina():
+    """Pagina over de basisprincipes van HTML."""
+    st.title("🧱 Web Technologie: HTML (HyperText Markup Language)")
 
-# --- Navigatie in Sidebar ---
-# st.sidebar creëert een zijbalk. Elementen die hieraan worden toegevoegd,
-# verschijnen aan de linkerkant van de app.
+    st.header("Wat is HTML? Het Skelet van het Web")
+    st.write(
+        """
+        Als je een website bezoekt, is **HTML** de absolute basis van wat je ziet. Het staat voor
+        **HyperText Markup Language**. Denk eraan als het **skelet** of de **blauwdruk** van een webpagina.
+        Het definieert de **structuur** en de **inhoud**: welke tekst is een titel, wat is een paragraaf,
+        waar staat een afbeelding, welke tekst is een link?
+
+        *   **HyperText:** Verwijst naar de 'links' (hyperlinks) die webpagina's met elkaar verbinden, waardoor je kunt navigeren op het web.
+        *   **Markup Language:** Het gebruikt speciale 'markeringen' of **tags** om de browser te vertellen hoe de inhoud moet worden gestructureerd en weergegeven.
+
+        *Analogie:* Als een webpagina een huis is, dan is HTML het fundament, de muren, het dak en de indeling van de kamers. Het bepaalt de basisstructuur, nog voordat er geschilderd wordt (CSS) of er elektrische apparaten worden aangesloten (JavaScript).
+        """
+    )
+
+    st.subheader("Tags, Elementen en Attributen")
+    st.write(
+        """
+        HTML werkt met **tags**, die meestal in paren komen: een **openingstag** (`<tagnaam>`) en een
+        **sluitingstag** (`</tagnaam>`). Alles daartussenin, inclusief de tags zelf, vormt een **HTML-element**.
+        """
+    )
+    st.code('<p>Dit is de inhoud van een paragraaf-element.</p>', language='html')
+    st.write(
+        """
+        Sommige elementen hebben geen inhoud en dus geen sluitingstag, dit zijn 'lege' elementen, zoals `<img>` (afbeelding) of `<br>` (nieuwe regel). Ze worden vaak geschreven met een `/` aan het eind: `<img src=\"logo.png\" />`.
+
+        Tags kunnen ook **attributen** bevatten. Attributen geven **extra informatie** over een element en staan altijd in de openingstag, meestal in de vorm `naam=\"waarde\"`.
+        """
+    )
+    st.code('<a href=\"https://www.google.com\">Klik hier voor Google</a>', language='html')
+    st.write("Hier is `href` het attribuut dat aangeeft waar de link naartoe gaat.")
+
+    st.subheader("Basisstructuur van een HTML-document")
+    st.code('''
+<!DOCTYPE html> <!-- Vertelt de browser dat dit een HTML5 document is -->
+<html> <!-- Het root-element, alles staat hierbinnen -->
+
+<head>
+    <!-- Bevat meta-informatie over de pagina (niet direct zichtbaar) -->
+    <meta charset=\"UTF-8\"> <!-- Tekenset specificatie (belangrijk!) -->
+    <title>Titel van de Pagina</title> <!-- Verschijnt in browser tabblad -->
+    <!-- Hier kunnen ook links naar CSS bestanden staan -->
+</head>
+
+<body>
+    <!-- Alle zichtbare inhoud van de pagina komt hier -->
+    <h1>Hoofdtitel van de Pagina</h1>
+    <p>Dit is een paragraaf met wat tekst.</p>
+    <a href=\"about.html\">Over ons</a>
+</body>
+
+</html>
+    ''', language='html')
+
+    st.subheader("Veelvoorkomende HTML Tags (Voorbeelden)")
+    st.markdown("**Koppen (Headings):**")
+    st.code("<h1>Grootste Kop</h1>\\n<h2>Subkop</h2>\\n<h6>Kleinste Kop</h6>", language='html')
+    st.write("Gebruik `<h1>` t/m `<h6>` om titels en subtitels aan te geven. `<h1>` is de belangrijkste.")
+
+    st.markdown("**Paragrafen:**")
+    st.code("<p>Dit is een alinea tekst.</p>\\n<p>Dit is nog een alinea.</p>", language='html')
+    st.write("De `<p>` tag wordt gebruikt voor blokken tekst.")
+
+    st.markdown("**Links (Anchors):**")
+    st.code("<a href=\\\"https://streamlit.io\\\">Bezoek Streamlit</a>", language='html')
+    st.write("De `<a>` tag maakt een hyperlink. Het `href` attribuut bevat de URL.")
+
+    st.markdown("**Afbeeldingen:**")
+    st.code("<img src=\\\"pad/naar/afbeelding.jpg\\\" alt=\\\"Beschrijving van afbeelding\\\">", language='html')
+    st.write("De `<img>` tag toont een afbeelding. `src` is het pad naar het bestand, `alt` is alternatieve tekst (belangrijk voor toegankelijkheid en als de afbeelding niet laadt). Dit is een leeg element.")
+
+    st.markdown("**Lijsten:**")
+    st.markdown("*Ongesorteerde lijst (bolletjes):*", unsafe_allow_html=True)
+    st.code("<ul>\\n  <li>Item 1</li>\\n  <li>Item 2</li>\\n</ul>", language='html')
+    st.markdown("*Gesorteerde lijst (nummers):*", unsafe_allow_html=True)
+    st.code("<ol>\\n  <li>Eerste stap</li>\\n  <li>Tweede stap</li>\\n</ol>", language='html')
+    st.write("`<ul>` (unordered list) en `<ol>` (ordered list) maken lijsten. Elk item staat in een `<li>` (list item) tag.")
+
+    st.markdown("**Structuur Elementen:**")
+    st.code("<div>Dit is een algemene container.</div>\\n<p>Gebruik <span>dit</span> voor inline styling.</p>", language='html')
+    st.write("`<div>` is een blok-niveau container, vaak gebruikt om secties te groeperen voor styling (met CSS). `<span>` is een inline container, vaak gebruikt om een klein stukje tekst binnen een groter blok apart te stijlen.")
+
+    st.subheader("Nesting: Elementen binnen Elementen")
+    st.write(
+        """
+        HTML elementen kunnen in elkaar genest worden. Bijvoorbeeld, een lijstitem (`<li>`) kan een link (`<a>`) bevatten, die weer een afbeelding (`<img>`) bevat.
+        Het is belangrijk om tags correct te sluiten in de omgekeerde volgorde waarin je ze opent.
+        """
+    )
+    st.code("<ul>\\n  <li><a href=\\\"#\\\">Link naar <strong>belangrijke</strong> info</a></li>\\n</ul>", language='html')
+    st.write("Hier is `<strong>` genest in `<a>`, wat weer genest is in `<li>`.")
+
+    st.subheader("Semantische HTML: Meer dan Alleen Uiterlijk")
+    st.write(
+        """
+        Moderne HTML (HTML5) introduceerde **semantische tags**. Deze tags geven meer *betekenis* aan de structuur van de pagina, niet alleen hoe het eruit moet zien. Voorbeelden zijn:
+        *   `<header>`: Voor de kopsectie van een pagina of sectie.
+        *   `<footer>`: Voor de voetsectie.
+        *   `<nav>`: Voor navigatielinks.
+        *   `<article>`: Voor een op zichzelf staand stuk inhoud (bv. blogpost, nieuwsartikel).
+        *   `<aside>`: Voor inhoud die losjes gerelateerd is aan de hoofdinhoud (bv. zijbalk).
+        *   `<section>`: Voor een thematische groepering van inhoud.
+
+        Het gebruik van deze tags is belangrijk voor:
+        *   **Zoekmachines (SEO):** Helpt zoekmachines de structuur van je pagina beter te begrijpen.
+        *   **Toegankelijkheid:** Helpt schermlezers en andere hulptechnologieën om de pagina correct te interpreteren voor gebruikers met een beperking.
+        *   **Onderhoudbaarheid:** Maakt de code duidelijker en makkelijker te begrijpen voor ontwikkelaars.
+        """
+    )
+
+    st.subheader("HTML en de Rol van CSS & JavaScript")
+    st.info(
+        """
+        **Onthoud:**
+        *   **HTML:** Bepaalt de **structuur** en **inhoud**.
+        *   **CSS (Cascading Style Sheets):** Bepaalt de **presentatie** (layout, kleuren, lettertypen). Zorgt ervoor dat het er mooi uitziet.
+        *   **JavaScript:** Voegt **interactiviteit** en **dynamisch gedrag** toe (reageren op kliks, animaties, data ophalen zonder herladen). Maakt de pagina levendig.
+
+        Ze werken samen om de moderne webervaring te creëren!
+        """
+    )
+
+    st.markdown("---")
+    st.subheader("🤔 Test je Kennis!")
+
+    html_vraag = "Welke HTML tag gebruik je om de belangrijkste, meest prominente kop op een pagina te maken?"
+    html_opties = [
+        "<p>",
+        "<h6>",
+        "<h1>", # Correct
+        "<head>"
+    ]
+    html_correct = html_opties[2]
+
+    gekozen_html_optie = st.radio(
+        html_vraag,
+        options=html_opties,
+        index=None,
+        key="html_vraag"
+    )
+
+    if gekozen_html_optie:
+        if gekozen_html_optie == html_correct:
+            st.success(f"Inderdaad! `{html_correct}` is de tag voor de hoofdtitel van een pagina. Het is belangrijk voor zowel de structuur als voor zoekmachines.")
+        elif gekozen_html_optie == html_opties[3]:
+            st.error(f"Niet helemaal. De `<head>` tag bevat meta-informatie over de pagina, maar niet de zichtbare hoofdtitel. `{html_correct}` is de juiste tag voor de zichtbare hoofdtitel in de `<body>`.")
+        else:
+            st.error(f"Bijna goed! `{gekozen_html_optie}` is wel een HTML tag, maar `{html_correct}` is specifiek bedoeld voor de belangrijkste kop op de pagina.")
+
+# --- NIEUWE FUNCTIE VOOR BASIS VAN CSS ---
+def css_basis_pagina():
+    """Pagina over de basisprincipes van CSS."""
+    st.title("🎨 Web Technologie: CSS (Cascading Style Sheets)")
+
+    st.header("Wat is CSS? De Stijl van het Web")
+    st.write(
+        """
+        Oké, HTML geeft ons de **structuur** en inhoud (het skelet). Maar hoe zorgen we ervoor
+        dat het er mooi en overzichtelijk uitziet? Daarvoor gebruiken we **CSS (Cascading Style Sheets)**.
+
+        CSS is een taal die beschrijft hoe HTML-elementen moeten worden **weergegeven** op het scherm.
+        Het bepaalt de **presentatie**: kleuren, lettertypen, marges, afstanden, achtergronden, layout, etc.
+
+        *Analogie:* Als HTML de structuur van het huis is (muren, kamers), dan is CSS de **verf**, het **behang**,
+        de **meubels**, en de **decoratie**. Het maakt het huis visueel aantrekkelijk en leefbaar.
+        Zonder CSS zouden webpagina's er erg kaal en saai uitzien (alleen zwarte tekst op een witte achtergrond).
+        """
+    )
+
+    st.subheader("Hoe werkt CSS? Selectors & Declarations")
+    st.write(
+        """
+        CSS werkt door **regels** te definiëren die aangeven welke stijl op welke HTML-elementen moet worden toegepast.
+        Een CSS-regel bestaat meestal uit:
+        1.  Een **Selector:** Hiermee *selecteer* je de HTML-element(en) die je wilt stijlen (bv. alle paragrafen, een specifiek element met een ID, elementen met een bepaalde class).
+        2.  Een **Declaration Block:** Dit staat tussen `{` en `}` en bevat één of meer **declaraties**, gescheiden door puntkomma's `;`.
+        3.  Een **Declaration:** Bestaat uit een **Property** (de stijl die je wilt veranderen, bv. `color` of `font-size`) en een **Value** (de waarde die je wilt instellen, bv. `blue` of `16px`), gescheiden door een dubbele punt `:`. 
+        """
+    )
+    st.code('''
+/* Dit is een CSS-commentaar */
+
+/* Selector: selecteert alle <p> elementen */
+p {
+  /* Declaration Block */
+  color: blue; /* Property: color, Value: blue */
+  font-size: 16px; /* Property: font-size, Value: 16px */
+}
+
+/* Selector: selecteert het element met id="intro" */
+#intro {
+  background-color: lightgray;
+}
+
+/* Selector: selecteert alle elementen met class="highlight" */
+.highlight {
+  font-weight: bold;
+}
+    ''', language='css')
+
+    st.subheader("CSS Koppelen aan HTML")
+    st.write("Er zijn drie manieren om CSS toe te passen op HTML:")
+    st.markdown(
+        """
+        1.  **External Stylesheet (Aanbevolen):** Je schrijft al je CSS-regels in een apart `.css` bestand (bv. `styles.css`) en koppelt dit bestand in de `<head>` van je HTML-document:
+            `<link rel="stylesheet" href="styles.css">`
+            *Voordeel:* Houdt structuur (HTML) en stijl (CSS) gescheiden, makkelijk te beheren voor grotere sites.
+        2.  **Internal Stylesheet:** Je plaatst CSS-regels direct in de `<head>` van je HTML-document, binnen `<style>` tags:
+            `<style> p { color: red; } </style>`
+            *Voordeel:* Handig voor kleine, specifieke stijlen voor één pagina.
+        3.  **Inline Styles:** Je past stijl direct toe op een specifiek HTML-element met het `style` attribuut:
+            `<p style="color: green;">Deze paragraaf is groen.</p>`
+            *Nadeel:* Maakt HTML onoverzichtelijk, moeilijk te onderhouden, vermijden indien mogelijk.
+        """
+    )
+
+    st.subheader("Veelvoorkomende CSS Properties")
+    st.write("Enkele voorbeelden van wat je met CSS kunt doen:")
+    st.markdown(
+        """
+        *   **Tekst:** `color`, `font-size`, `font-family`, `font-weight` (vet), `text-align` (uitlijning).
+        *   **Achtergrond:** `background-color`, `background-image`.
+        *   **Box Model:** `margin` (ruimte *buiten* het element), `padding` (ruimte *binnen* het element), `border` (rand).
+        *   **Layout:** `display` (bv. `block`, `inline`, `flex`, `grid`), `position`, `width`, `height`.
+        """
+    )
+    # Placeholder voor interactief voorbeeld?
+
+    st.subheader("De 'Cascade' en Specificiteit (Kort)")
+    st.write(
+        """
+        Waarom 'Cascading'? Omdat meerdere CSS-regels van toepassing kunnen zijn op hetzelfde element.
+        De browser volgt regels (de cascade) om te bepalen welke stijl uiteindelijk wint:
+        1.  **Belangrijkheid:** `!important` wint (maar gebruik spaarzaam!).
+        2.  **Specificiteit:** Hoe specifieker de selector (bv. een ID is specifieker dan een class, die weer specifieker is dan een tagnaam), hoe zwaarder deze weegt.
+        3.  **Volgorde:** Als de specificiteit gelijk is, wint de regel die *later* in de CSS-code staat.
+
+        Dit klinkt complex, maar het zorgt ervoor dat je basisstijlen kunt definiëren en deze later kunt overschrijven voor specifieke gevallen.
+        """
+    )
+
+    st.info(
+        """
+        **Samenhang:**
+        *   **HTML:** Levert de inhoud en structuur.
+        *   **CSS:** Stijlt die inhoud en structuur.
+        *   **JavaScript:** Kan later zowel HTML (inhoud/structuur) als CSS (stijl) dynamisch veranderen.
+        """
+    )
+
+    st.markdown("---")
+    st.subheader("🤔 Test je Kennis!")
+
+    css_vraag = "Je wilt ALLE paragrafen (`<p>`) op je webpagina een blauwe tekstkleur geven. Welke CSS-regel is hiervoor het meest geschikt?"
+    css_opties = [
+        "p { text-color: blue; }",
+        "paragraaf { color: blue; }",
+        ".paragraaf { color: blue; }",
+        "p { color: blue; }" # Correct
+    ]
+    css_correct = css_opties[3]
+
+    gekozen_css_optie = st.radio(
+        css_vraag,
+        options=css_opties,
+        index=None,
+        key="css_vraag"
+    )
+
+    if gekozen_css_optie:
+        if gekozen_css_optie == css_correct:
+            st.success(f"Correct! `{css_correct}` selecteert alle `<p>` elementen (via de `p` selector) en past de eigenschap `color` toe met de waarde `blue`.")
+        elif gekozen_css_optie == css_opties[0]:
+            st.error("Bijna! De property voor tekstkleur is `color`, niet `text-color`.")
+        elif gekozen_css_optie == css_opties[1]:
+            st.error("Niet helemaal. De selector voor een HTML-tag is de tagnaam zelf (`p`), niet het woord 'paragraaf'.")
+        elif gekozen_css_optie == css_opties[2]:
+            st.error(f'Deze regel zou werken als je aan alle paragrafen de *class* `paragraaf` zou toevoegen (`<p class="paragraaf">`), maar de vraag was om *alle* paragrafen te selecteren, wat je direct met de `p` selector doet.')
+
+
+# --- NIEUWE FUNCTIE VOOR BASIS VAN JAVASCRIPT ---
+def js_basis_pagina():
+    """Pagina over de basisprincipes van JavaScript."""
+    st.title("⚡ Web Technologie: JavaScript (Interactie)")
+
+    st.header("Wat is JavaScript? Het Leven van het Web")
+    st.write(
+        """
+        We hebben HTML voor de structuur (skelet) en CSS voor de stijl (uiterlijk).
+        Maar hoe maken we webpagina's **dynamisch** en **interactief**? Hoe reageren ze op
+        gebruikersacties zonder dat de hele pagina opnieuw hoeft te laden?
+        Dat is waar **JavaScript (JS)** om de hoek komt kijken.
+
+        JavaScript is een **programmeertaal** die voornamelijk wordt gebruikt om webpagina's
+        interactief te maken. Het draait meestal **in de browser van de gebruiker** (net als HTML en CSS).
+
+        *Analogie:* Als HTML het huis en CSS de inrichting is, dan is JavaScript de **elektriciteit**, de **apparaten**,
+        en de **bewoners**. Het maakt dingen mogelijk:
+        *   De lichten aan/uit doen als je op een knop drukt (reageren op events).
+        *   De thermostaat die de temperatuur aanpast (inhoud dynamisch wijzigen).
+        *   De deurbel die rinkelt (notificaties tonen).
+        *   Apparaten die met elkaar praten (communiceren met de backend via API's).
+        """
+    )
+
+    st.subheader("Wat kun je met JavaScript doen? (Voorbeelden)")
+    st.markdown(
+        """
+        *   **Reageren op Gebruikersacties:** Iets laten gebeuren als een gebruiker klikt, typt, scrolt, etc. (Events).
+        *   **HTML Inhoud Veranderen:** Tekst, afbeeldingen of andere elementen toevoegen, verwijderen of aanpassen *nadat* de pagina is geladen (DOM Manipulatie).
+        *   **CSS Stijlen Veranderen:** Het uiterlijk van elementen dynamisch aanpassen.
+        *   **Formulieren Valideren:** Controleren of gebruikers de juiste informatie invoeren *voordat* het naar de server wordt gestuurd.
+        *   **Animaties Maken:** Elementen laten bewegen of van uiterlijk veranderen.
+        *   **Data Ophalen/Versturen:** Communiceren met de backend (via API's) om gegevens op te halen of te verzenden zonder de hele pagina te herladen (AJAX/Fetch).
+        *   **Complexe UI Bouwen:** Denk aan interactieve kaarten, drag-and-drop interfaces, etc.
+        """
+    )
+
+    st.subheader("Basisconcepten (Zeer Eenvoudig)")
+    st.write("JavaScript is een volwaardige programmeertaal. Enkele kernideeën:")
+    st.markdown(
+        """
+        *   **Variabelen:** Namen waaronder je data kunt opslaan (bv. `let score = 0;`).
+        *   **Data Types:** Soorten gegevens (bv. getallen, tekst (strings), booleans (true/false)).
+        *   **Functies:** Blokken herbruikbare code die een specifieke taak uitvoeren.
+        *   **Events:** Gebeurtenissen waarop je kunt reageren (bv. `onclick`, `onmouseover`, `onsubmit`).
+        *   **DOM (Document Object Model):** Een manier waarop JavaScript de structuur van een HTML-pagina 'ziet' en kan manipuleren (elementen selecteren, aanpassen, toevoegen, verwijderen).
+        """
+    )
+
+    st.subheader("Simpel Voorbeeld: Knop die Tekst Verandert")
+    st.write("Stel je voor, je hebt deze HTML:")
+    st.code('<p id="mijnTekst">Hallo!</p>\n<button id="mijnKnop">Verander Tekst</button>', language='html')
+    st.write("Met JavaScript kun je dit doen:")
+    st.code('''
+// Selecteer de knop en de paragraaf
+const knop = document.getElementById('mijnKnop');
+const tekst = document.getElementById('mijnTekst');
+
+// Voeg een 'event listener' toe aan de knop
+// Deze functie wordt uitgevoerd als er op de knop geklikt wordt
+knop.addEventListener('click', function() {
+  // Verander de inhoud van de paragraaf
+  tekst.textContent = 'Tekst is veranderd!';
+});
+    ''', language='javascript')
+    st.write("(Dit JavaScript-fragment zou je meestal in een apart `.js` bestand zetten en koppelen in je HTML, of binnen `<script>` tags plaatsen.)")
+
+    st.subheader("JavaScript Koppelen aan HTML")
+    st.write("Net als CSS, kun je JavaScript op een paar manieren toevoegen:")
+    st.markdown(
+        """
+        1.  **External Script (Aanbevolen):** Code in een apart `.js` bestand, gekoppeld met:
+            `<script src="mijn_script.js"></script>` (vaak onderaan de `<body>`).
+        2.  **Internal Script:** Code direct in de HTML binnen `<script>` tags:
+            `<script> alert('Hallo!'); </script>` (kan in `<head>` of `<body>`).
+        """
+    )
+
+    st.info(
+        """
+        **De Drie-eenheid:**
+        *   **HTML:** Structuur
+        *   **CSS:** Stijl
+        *   **JavaScript:** Gedrag/Interactie
+
+        Ze vormen samen de basis van moderne webontwikkeling.
+        """
+    )
+
+    st.markdown("---")
+    st.subheader("🤔 Test je Kennis!")
+
+    js_vraag = "Welke taal wordt voornamelijk gebruikt om interactiviteit en dynamisch gedrag toe te voegen aan webpagina's, direct in de browser van de gebruiker?"
+    js_opties = [
+        "HTML",
+        "CSS",
+        "Python",
+        "JavaScript" # Correct
+    ]
+    js_correct = js_opties[3]
+
+    gekozen_js_optie = st.radio(
+        js_vraag,
+        options=js_opties,
+        index=None,
+        key="js_vraag"
+    )
+
+    if gekozen_js_optie:
+        if gekozen_js_optie == js_correct:
+            st.success(f"Klopt helemaal! {js_correct} is de primaire taal voor client-side scripting en maakt webpagina's levendig.")
+        elif gekozen_js_optie == js_opties[0]:
+            st.error("HTML definieert de *structuur* en inhoud, maar niet de interactieve logica.")
+        elif gekozen_js_optie == js_opties[1]:
+            st.error("CSS regelt de *styling* en presentatie, maar voegt geen interactief gedrag toe.")
+        elif gekozen_js_optie == js_opties[2]:
+            st.error("Python wordt vaak gebruikt voor de *backend* (server-side logica), maar niet typisch voor interactie direct *in* de browser zoals JavaScript dat doet (hoewel er manieren zijn via frameworks zoals Brython of PyScript, is JS de standaard).")
+
+
+# --- Navigatie in Sidebar --- (AANPASSING NODIG)
+# ...
 
 st.sidebar.title("Navigatie")
-# st.sidebar.radio maakt een keuzemenu in de zijbalk.
-# Het eerste argument is een label, het tweede is een lijst met opties.
-# De gekozen optie wordt opgeslagen in de variabele 'pagina_keuze'.
 pagina_keuze = st.sidebar.radio(
     "Kies een onderwerp:",
     [
@@ -1216,16 +1603,33 @@ pagina_keuze = st.sidebar.radio(
         "Fase 6: Onderhoud",
         "Ontwikkelmethodes (Hoe werken we?)",
         "Frontend & Backend (De Twee Kanten)",
-        "Basis van Streamlit (App Bouwen)",        # Nieuwe optie
-        "Basis van Git & GitHub (Code Beheren & Delen)" # Nieuwe optie
+        "Web Technologie: HTML (Structuur)",
+        "Web Technologie: CSS (Styling)", # NIEUW
+        "Web Technologie: JS (Interactie)", # NIEUW
+        "Basis van Streamlit (App Bouwen)",
+        "Basis van Git & GitHub (Code Beheren & Delen)"
     ]
 )
 
-# --- Hoofdlogica: Toon de geselecteerde pagina ---
-# Hier gebruiken we if/elif/else statements om te bepalen welke functie
-# (en dus welke pagina-inhoud) moet worden aangeroepen op basis van
-# de keuze van de gebruiker in de sidebar ('pagina_keuze').
+# --- Hoofdlogica: Toon de geselecteerde pagina --- (CORRECTIE)
+# Verwijder de incomplete/incorrecte elif-blok hieronder
+# en vervang door de volledige if/elif structuur.
 
+# Huidige incorrecte blok (wordt verwijderd):
+# # ...
+# elif pagina_keuze == "Web Technologie: HTML (Structuur)":
+#     html_basis_pagina()
+# elif pagina_keuze == "Web Technologie: CSS (Styling)": # NIEUW
+#     css_basis_pagina()
+# elif pagina_keuze == "Web Technologie: JS (Interactie)": # NIEUW
+#     js_basis_pagina()
+# elif pagina_keuze == "Basis van Streamlit (App Bouwen)":
+#     streamlit_basis_pagina()
+# elif pagina_keuze == "Basis van Git & GitHub (Code Beheren & Delen)":
+#     git_github_basis_pagina()
+# # ...
+
+# Volledige, correcte if/elif structuur:
 if pagina_keuze == "Wat is Software Engineering?":
     introductie_pagina()
 elif pagina_keuze == "De Levenscyclus van Software (Overzicht)":
@@ -1246,10 +1650,18 @@ elif pagina_keuze == "Ontwikkelmethodes (Hoe werken we?)":
     ontwikkelmethodes_pagina()
 elif pagina_keuze == "Frontend & Backend (De Twee Kanten)":
     frontend_backend_pagina()
-elif pagina_keuze == "Basis van Streamlit (App Bouwen)":     # Nieuwe conditie
+elif pagina_keuze == "Web Technologie: HTML (Structuur)":
+    html_basis_pagina()
+elif pagina_keuze == "Web Technologie: CSS (Styling)":
+    css_basis_pagina()
+elif pagina_keuze == "Web Technologie: JS (Interactie)":
+    js_basis_pagina()
+elif pagina_keuze == "Basis van Streamlit (App Bouwen)":
     streamlit_basis_pagina()
-elif pagina_keuze == "Basis van Git & GitHub (Code Beheren & Delen)": # Nieuwe conditie
+elif pagina_keuze == "Basis van Git & GitHub (Code Beheren & Delen)":
     git_github_basis_pagina()
+
+# ... rest van de file (vanaf placeholder aanroepen) ...
 
 # Placeholder aanroepen (nog niet functioneel)
 # laad_voortgang() # Laad voortgang aan het begin (hypothetisch)
