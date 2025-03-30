@@ -1863,7 +1863,7 @@ def backend_talen_php_pagina():
         *   **CakePHP:** Een ouder framework dat nog steeds actief wordt ontwikkeld, gebaseerd op Ruby on Rails principes.
         """
     )
-    st.code('''
+    st.code(r'''
 <?php
 // Voorbeeld (conceptueel - Laravel Route)
 use Illuminate\Support\Facades\Route;
@@ -2372,180 +2372,119 @@ query {
     st.info("Het ontwerpen en bouwen van goede API's is een essentieel onderdeel van moderne backend ontwikkeling, dat de basis legt voor flexibele en schaalbare applicaties.")
 
 def backend_servers_deployment_pagina():
-    """Placeholder pagina voor Servers & Deployment."""
-    st.header("Servers en Deployment")
-    st.write("Waar draait de backend code? Hoe krijg je de applicatie live? Dit zijn vragen rondom servers en deployment.")
-    st.info("TODO: Verdere inhoud voor Servers & Deployment toevoegen.")
-    # Voorbeeld: Bespreek webservers (Nginx, Apache), cloud platforms (AWS, Azure, GCP), containers (Docker), CI/CD.
-
-# --- AANPASSING IN backend_hoofdpagina ---
-def backend_hoofdpagina():
-    """Hoofdpagina voor de Backend sectie, dient als hub."""
-    st.title("⚙️ Backend Technologie: Achter de Schermen")
-
+    """Pagina over Servers & Deployment."""
+    st.header("🚀 Servers & Deployment: Je Applicatie Live Brengen")
     st.write(
         """
-        Welkom bij de backend sectie! Hier duiken we dieper in de technologieën die de motor vormen
-        van webapplicaties. Dit is waar de logica draait, data wordt opgeslagen en verwerkt, en de
-        communicatie met de frontend wordt afgehandeld.
+        Je hebt je fantastische applicatie gebouwd – de frontend ziet er gelikt uit, de backend logica werkt perfect.
+        Maar nu draait alles nog lokaal op jouw computer. Hoe zorg je ervoor dat de rest van de wereld jouw applicatie
+        kan gebruiken via het internet? Dat is waar **servers** en **deployment** om de hoek komen kijken.
 
-        Kies hieronder een specifiek onderwerp om meer te leren:
+        **Deployment** is het proces van het nemen van je ontwikkelde software (code, bestanden, configuraties) en
+        deze te plaatsen op een **server** zodat deze toegankelijk en bruikbaar wordt voor je eindgebruikers.
         """
     )
 
-    backend_onderwerpen = [
-        "Selecteer een onderwerp...",
-        "Programmeertalen",
-        "Frameworks (Algemeen)",
-        "Databases",
-        "API's (Application Programming Interfaces)",
-        "Servers & Deployment"
-    ]
+    st.subheader("Wat is een Server?")
+    st.write(
+        """
+        In de context van webapplicaties is een server in essentie een **krachtige computer** die (bijna) altijd aan staat
+        en verbonden is met het internet. Zijn primaire taak is om **verzoeken** (requests) van clients (zoals browsers)
+        te ontvangen, deze te verwerken (vaak door je backend code uit te voeren), en een **antwoord** (response) terug
+        te sturen (bv. HTML, CSS, JS voor de frontend, of JSON data van een API).
 
-    gekozen_onderwerp = st.selectbox("Kies een Backend Onderwerp:", options=backend_onderwerpen, key="backend_select")
+        *Analogie:* Denk aan een bibliotheek die 24/7 open is. De server is het gebouw en de bibliothecarissen
+        die klaarstaan om verzoeken voor boeken (webpagina's/data) te verwerken en uit te lenen.
 
-    st.markdown("---")
+        Servers kunnen verschillende vormen aannemen:
+        """
+    )
+    st.markdown(
+        """
+        *   **Fysieke Server:** Een daadwerkelijke machine in een datacenter (of zelfs in een kantoorkast, hoewel minder gebruikelijk voor publieke apps). Je bent zelf verantwoordelijk voor hardware, onderhoud, koeling, etc.
+        *   **Virtuele Machine (VM):** Softwarematige emulatie van een fysieke computer die draait op een fysieke host. Meerdere VM's kunnen op één fysieke machine draaien. Biedt meer flexibiliteit dan fysieke servers. Aanbieders zoals DigitalOcean, Linode, Vultr bieden VM's aan.
+        *   **Cloud Server/Instance:** VM's die draaien op de infrastructuur van grote cloud providers zoals AWS (EC2), Google Cloud (Compute Engine) of Microsoft Azure (Virtual Machines). Biedt enorme schaalbaarheid, flexibiliteit en een breed scala aan beheerde diensten.
+        *   **Serverless Computing:** Een abstracter model waarbij je je code uitvoert zonder je zorgen te hoeven maken over de onderliggende servers. De cloud provider beheert de infrastructuur volledig en schaalt automatisch. Voorbeelden: AWS Lambda, Google Cloud Functions, Azure Functions.
+        """
+    )
 
-    # Toon inhoud op basis van selectie
-    if gekozen_onderwerp == "Programmeertalen":
-        st.header("Backend Programmeertalen")
-        st.write("De keuze van de programmeertaal is fundamenteel voor de backend. Hier bekijken we enkele populaire opties.")
-        st.write("**Specifieke Talen:**")
+    st.subheader("De Rol van Webservers (Software)")
+    st.write(
+        """
+        Naast de fysieke/virtuele machine heb je ook **webserver software** nodig die luistert naar inkomende HTTP-verzoeken
+        en deze correct doorstuurt of afhandelt. Twee zeer populaire keuzes zijn:
+        *   **Nginx (uitgesproken als 'Engine-X'):** Bekend om zijn hoge performance, stabiliteit, en efficiëntie, vooral bij het afhandelen van veel gelijktijdige verbindingen en statische bestanden. Wordt vaak gebruikt als **reverse proxy**, **load balancer** en voor het serveren van statische content.
+        *   **Apache HTTP Server:** Een van de oudste en meest gebruikte webservers. Zeer flexibel en configureerbaar via `.htaccess` bestanden.
 
-        # Initialiseer session state voor elke taal indien nodig
-        # (Doen we één keer voor allemaal om code schoon te houden)
-        talen = ["python", "nodejs", "java", "csharp", "php", "ruby"]
-        for taal in talen:
-            key = f"show_{taal}_details"
-            if key not in st.session_state:
-                st.session_state[key] = False
+        Vaak zie je een setup waarbij Nginx fungeert als de 'voordeur' (reverse proxy). Het vangt alle requests op, serveert snel statische bestanden (CSS, JS, afbeeldingen), en stuurt dynamische requests (die je backend code vereisen) door naar je applicatieserver (bv. een Python server die draait met Gunicorn/uWSGI, een Node.js server, een Java Tomcat server, etc.).
+        """
+    )
+    with st.expander("Definities: Webserver Termen"):
+        st.markdown("**Webserver Software:** Programma dat HTTP(S) requests afhandelt, zoals Nginx of Apache.")
+        st.markdown("**Applicatieserver:** Software die de backend code van je applicatie uitvoert (bv. Gunicorn voor Python, Tomcat voor Java). Wordt vaak *achter* een webserver geplaatst.")
+        st.markdown("**Reverse Proxy:** Een server (vaak Nginx) die requests van clients ontvangt en doorstuurt naar een of meer backend/applicatieservers. Verbergt de backend infrastructuur en kan extra taken uitvoeren zoals load balancing, SSL encryptie, en caching.")
+        st.markdown("**Load Balancer:** Verdeelt inkomende requests over meerdere backend servers om de werklast te spreiden en de beschikbaarheid te verhogen.")
 
-        # Functie om alle andere talen te deselecteren
-        def select_language(selected_lang):
-            for taal in talen:
-                key = f"show_{taal}_details"
-                st.session_state[key] = (taal == selected_lang)
+    st.subheader("Cloud Platforms (IaaS, PaaS, SaaS)")
+    st.write(
+        """
+        Moderne deployment gebeurt steeds vaker op **cloud platforms**. Deze bieden verschillende servicemodellen:
+        *   **IaaS (Infrastructure as a Service):** Je huurt de basis infrastructuur (VM's, opslag, netwerk). Je bent zelf verantwoordelijk voor het besturingssysteem, middleware en de applicatie. (Bv. AWS EC2, Google Compute Engine, Azure VMs).
+        *   **PaaS (Platform as a Service):** Je beheert alleen je applicatiecode en data. De provider beheert het besturingssysteem, middleware, schaling, en infrastructuur. (Bv. Heroku, Google App Engine, AWS Elastic Beanstalk, Azure App Service, Streamlit Community Cloud!).
+        *   **SaaS (Software as a Service):** Je gebruikt kant-en-klare software via het internet. Je beheert niets van de onderliggende infrastructuur of applicatie. (Bv. Gmail, Dropbox, Salesforce).
 
-        # Knoppen voor taalkeuze in kolommen
-        cols = st.columns(len(talen))
-        button_labels = ["Python", "Node.js", "Java", "C#", "PHP", "Ruby"]
-        
-        for i, taal in enumerate(talen):
-            with cols[i]:
-                if st.button(button_labels[i], key=f"show_{taal}"):
-                    select_language(taal)
+        PaaS-oplossingen maken deployment vaak veel eenvoudiger, omdat veel van de complexe infrastructuurtaken worden overgenomen.
+        """
+    )
 
-        # Toon de geselecteerde subpagina
-        if st.session_state.show_python_details:
-             backend_talen_python_pagina()
-        elif st.session_state.show_nodejs_details:
-             backend_talen_nodejs_pagina()
-        elif st.session_state.show_java_details:
-             backend_talen_java_pagina()
-        elif st.session_state.show_csharp_details:
-             backend_talen_csharp_pagina()
-        elif st.session_state.show_php_details:
-             backend_talen_php_pagina()
-        elif st.session_state.show_ruby_details:
-             backend_talen_ruby_pagina()
-        else:
-             st.info("Klik op een van de taalknoppen hierboven voor meer details.")
+    st.subheader("Containers: Docker & Kubernetes")
+    st.write(
+        """
+        Een revolutionaire technologie in deployment is **containerisatie**, met **Docker** als de populairste tool.
+        *   **Docker:** Stelt je in staat om je applicatie en *al* zijn afhankelijkheden (bibliotheken, runtime, systeentools) samen te verpakken in een gestandaardiseerde eenheid: een **container image**. Deze image kan vervolgens consistent worden uitgevoerd op elke machine waarop Docker draait (jouw laptop, een testserver, een cloud VM).
+            *   *Voordeel:* Lost het "het werkt wel op mijn machine" probleem op. Zorgt voor consistente omgevingen van ontwikkeling tot productie. Containers zijn lichtgewicht en starten snel.
+        *   **Kubernetes (K8s):** Als je veel containers hebt draaien (bv. voor een microservices architectuur), heb je een tool nodig om deze te **beheren en orkestreren**: automatisch deployen, schalen, load balancing, health checks, rollbacks, etc. Kubernetes is de de-facto standaard voor container orchestratie. Cloud providers bieden beheerde Kubernetes diensten (AWS EKS, Google GKE, Azure AKS).
 
+        *Analogie:* Een Docker container is als een scheepscontainer: de inhoud (je app en dependencies) is netjes verpakt, en de buitenkant (de container) is gestandaardiseerd, waardoor hij makkelijk te verplaatsen en te beheren is op verschillende schepen en kranen (verschillende machines/omgevingen). Kubernetes is de havenmeester die bepaalt welke container waarheen gaat en hoeveel kranen er nodig zijn.
+        """
+    )
+    with st.expander("Definities: Container Termen"):
+        st.markdown("**Container Image:** Een lichtgewicht, standalone, uitvoerbaar pakket dat alles bevat wat nodig is om een stuk software te draaien: code, runtime, systeemtools, systeembibliotheken, instellingen.")
+        st.markdown("**Container:** Een draaiende instantie van een container image.")
+        st.markdown("**Dockerfile:** Een tekstbestand dat de instructies bevat om een Docker image te bouwen.")
+        st.markdown("**Container Orchestration:** Het automatiseren van de deployment, schaling, en beheer van containerized applicaties.")
 
-    elif gekozen_onderwerp == "Frameworks (Algemeen)":
-        # st.header("Backend Frameworks")
-        # st.write("Frameworks helpen ontwikkelaars om sneller en gestructureerder backend applicaties te bouwen. Ze bieden oplossingen voor veelvoorkomende taken zoals routing, database interactie en beveiliging.")
-        # st.info("TODO: Inhoud voor Backend Frameworks (Algemeen) toevoegen.")
-        # Voorbeeld: Bespreek concepten zoals MVC/MVT, full-stack vs microframeworks
-        backend_frameworks_algemeen_pagina() # <<< WIJZIGING
+    st.subheader("Deployment Strategieën")
+    st.write("Hoe breng je een nieuwe versie van je app live zonder (veel) downtime of problemen?")
+    with st.expander("Veelgebruikte Strategieën"):
+        st.markdown(
+            """
+            *   **Big Bang / Recreate:** Stop de oude versie, deploy de nieuwe. Simpel, maar veroorzaakt downtime.
+            *   **Rolling Update:** Vervang servers/instances één voor één of in batches door de nieuwe versie. Minder downtime, maar tijdelijk draaien er twee versies naast elkaar.
+            *   **Blue/Green Deployment:** Zet een identieke 'groene' omgeving op naast de live 'blauwe' omgeving. Test de groene omgeving. Schakel vervolgens de routering om van blauw naar groen. Bij problemen kun je snel terugschakelen. Vereist dubbele infrastructuur.
+            *   **Canary Release:** Rol de nieuwe versie uit naar een klein percentage van de gebruikers. Monitor de resultaten. Als alles goed gaat, rol verder uit. Als er problemen zijn, rol terug. Minimaliseert risico.
+            """
+        )
 
-    elif gekozen_onderwerp == "Databases":
-        # st.header("Databases voor de Backend")
-        # st.write("De backend is vaak verantwoordelijk voor het opslaan en ophalen van gegevens. Databases zijn essentieel voor het beheren van deze data.")
-        # st.info("TODO: Inhoud voor Databases toevoegen.")
-        # Voorbeeld: Bespreek SQL vs NoSQL, ORMs, ACID principes, specifieke databases zoals PostgreSQL, MongoDB.
-        backend_databases_pagina() # <<< WIJZIGING
+    st.subheader("CI/CD: Automatisering is Koning")
+    st.write(
+        """
+        Moderne softwareontwikkeling streeft naar **snelle en betrouwbare** releases. **CI/CD** is een set praktijken en tools die dit automatiseren:
+        *   **Continuous Integration (CI):** Ontwikkelaars voegen hun code regelmatig (minstens dagelijks) samen in een gedeelde repository (bv. via Git). Elke samenvoeging triggert een **automatische build** en **automatische tests**. Dit helpt om integratieproblemen vroegtijdig te ontdekken.
+        *   **Continuous Delivery (CD):** Gaat een stap verder dan CI. Na een succesvolle build en test wordt de code **automatisch** klaargezet voor deployment naar een (test- of productie-) omgeving. De daadwerkelijke deployment naar productie vereist vaak nog een handmatige goedkeuring.
+        *   **Continuous Deployment (CD - andere betekenis):** De meest geavanceerde vorm. Elke wijziging die alle CI-stappen succesvol doorloopt, wordt **automatisch** gedeployed naar productie.
 
-    elif gekozen_onderwerp == "API's (Application Programming Interfaces)":
-        # st.header("API's: De Brug tussen Systemen")
-        # st.write("API's definiëren hoe verschillende softwarecomponenten (zoals de frontend en backend, of verschillende backend services) met elkaar communiceren.")
-        # st.info("TODO: Inhoud voor API's toevoegen.")
-        # Voorbeeld: Bespreek REST, GraphQL, authenticatie methoden (tokens, OAuth), API design principes.
-        backend_apis_pagina() # <<< WIJZIGING
-
-    elif gekozen_onderwerp == "Servers & Deployment":
-        # st.header("Servers en Deployment")
-        # st.write("Waar draait de backend code? Hoe krijg je de applicatie live? Dit zijn vragen rondom servers en deployment.")
-        # st.info("TODO: Inhoud voor Servers & Deployment toevoegen.")
-        # Voorbeeld: Bespreek webservers (Nginx, Apache), cloud platforms (AWS, Azure, GCP), containers (Docker), CI/CD.
-        backend_servers_deployment_pagina() # <<< WIJZIGING
-
-    elif gekozen_onderwerp == "Selecteer een onderwerp...":
-        st.info("Selecteer een onderwerp uit de lijst hierboven om de details te bekijken.")
-
-# --- Navigatie in Sidebar --- (AANPASSING)
-# ...
-st.sidebar.title("Navigatie")
-pagina_keuze = st.sidebar.radio(
-    "Kies een onderwerp:",
-    [
-        "Wat is Software Engineering?",
-        "De Levenscyclus van Software (Overzicht)",
-        "Fase 1: Eisen Verzamelen",
-        "Fase 2: Ontwerp",
-        "Fase 3: Implementatie",
-        "Fase 4: Testen",
-        "Fase 5: Deployment",
-        "Fase 6: Onderhoud",
-        "Ontwikkelmethodes (Hoe werken we?)",
-        "Frontend & Backend (De Twee Kanten)",
-        "Web Technologie: HTML (Structuur)",
-        "Web Technologie: CSS (Styling)",
-        "Web Technologie: JS (Interactie)",
-        "Backend Technologie (Overzicht)", # NIEUW
-        "Basis van Streamlit (App Bouwen)",
-        "Basis van Git & GitHub (Code Beheren & Delen)"
-    ]
-)
-
-# --- Hoofdlogica: Toon de geselecteerde pagina --- (AANPASSING)
-# ...
-
-# Volledige, correcte if/elif structuur:
-if pagina_keuze == "Wat is Software Engineering?":
-    introductie_pagina()
-elif pagina_keuze == "De Levenscyclus van Software (Overzicht)":
-    levenscyclus_overzicht_pagina()
-elif pagina_keuze == "Fase 1: Eisen Verzamelen":
-    fase_1_eisen_pagina()
-elif pagina_keuze == "Fase 2: Ontwerp":
-    fase_2_ontwerp_pagina()
-elif pagina_keuze == "Fase 3: Implementatie":
-    fase_3_implementatie_pagina()
-elif pagina_keuze == "Fase 4: Testen":
-    fase_4_testen_pagina()
-elif pagina_keuze == "Fase 5: Deployment":
-    fase_5_deployment_pagina()
-elif pagina_keuze == "Fase 6: Onderhoud":
-    fase_6_onderhoud_pagina()
-elif pagina_keuze == "Ontwikkelmethodes (Hoe werken we?)":
-    ontwikkelmethodes_pagina()
-elif pagina_keuze == "Frontend & Backend (De Twee Kanten)":
-    frontend_backend_pagina()
-elif pagina_keuze == "Web Technologie: HTML (Structuur)":
-    html_basis_pagina()
-elif pagina_keuze == "Web Technologie: CSS (Styling)":
-    css_basis_pagina()
-elif pagina_keuze == "Web Technologie: JS (Interactie)":
-    js_basis_pagina()
-elif pagina_keuze == "Basis van Streamlit (App Bouwen)":
-    streamlit_basis_pagina()
-elif pagina_keuze == "Basis van Git & GitHub (Code Beheren & Delen)":
-    git_github_basis_pagina()
-elif pagina_keuze == "Backend Technologie (Overzicht)": # NIEUW
-    backend_hoofdpagina()
-
-# ... rest van de file ...
+        Tools zoals Jenkins, GitLab CI/CD, GitHub Actions, CircleCI helpen bij het implementeren van CI/CD pipelines.
+        """
+    )
+    st.info(
+        """
+        Servers en deployment vormen de brug tussen ontwikkeling en de eindgebruiker. Het kiezen van de juiste
+        serverinfrastructuur, deployment strategie en het automatiseren via containers en CI/CD zijn cruciaal
+        voor het leveren van betrouwbare en schaalbare applicaties.
+        """
+    )
+# --- End of Function ---
 
 # Placeholder aanroepen (nog niet functioneel)
 # laad_voortgang() # Laad voortgang aan het begin (hypothetisch)
